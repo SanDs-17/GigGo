@@ -1,4 +1,4 @@
-# EventHub — Full-Stack Clone
+# GigGo — Full-Stack Clone
 
 India's premium entertainment marketplace. Connects customers with verified artists, bands, DJs and venues using milestone-protected payments.
 
@@ -33,7 +33,7 @@ docker-compose up -d
 ```
 
 PostgreSQL → `localhost:5432`  
-pgAdmin → `http://localhost:5050` (admin@eventhub.com / admin123)
+pgAdmin → `http://localhost:5050` (admin@giggo.com / admin123)
 
 ### 2. Backend Setup
 

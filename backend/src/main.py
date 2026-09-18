@@ -8,7 +8,7 @@ from src.app.api.v1.router import api_router
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="EventHub API (Clean Architecture)",
+    title="GigGo API (Clean Architecture)",
     description="India's premium entertainment marketplace API",
     version="1.1.0",
 )
@@ -27,7 +27,7 @@ app.include_router(api_router)
 
 @app.get("/")
 def root():
-    return {"message": "EventHub Clean Architecture API is running 🎵"}
+    return {"message": "GigGo Clean Architecture API is running 🎵"}
 
 @app.get("/health")
 def health():

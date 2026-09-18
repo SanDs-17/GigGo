@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
-  title: "EventHub",
+  title: "GigGo",
   description: "India's premium entertainment marketplace",
 };
 

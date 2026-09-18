@@ -121,7 +121,7 @@ export default function HomePage() {
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <h2 style={{ fontSize: '2.5rem', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '1rem', color: '#fff' }}>
-              How EventHub works
+              How GigGo works
             </h2>
             <p style={{ color: 'var(--text-2)', fontSize: '1.1rem' }}>
               Three steps from browsing to a booked, protected event.
@@ -188,7 +188,7 @@ export default function HomePage() {
                 <span className="gradient-text">predictable revenue</span>
               </h2>
               <p style={{ color: 'var(--text-2)', lineHeight: 1.7, marginBottom: '2.5rem', fontSize: '1.1rem' }}>
-                Venues, bands, DJs and solo artists run their whole business from the EventHub studio — requests, packages, media and payouts in one place.
+                Venues, bands, DJs and solo artists run their whole business from the GigGo studio — requests, packages, media and payouts in one place.
               </p>
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                 <Link href="/onboarding/provider-setup" className="btn-primary" style={{ padding: '0.875rem 2rem', fontSize: '1rem' }}>Start listing free</Link>

@@ -69,7 +69,7 @@ export default function AuthPage() {
           <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(8px)' }}>
             <Music2 size={18} color="#fff" />
           </div>
-          <span style={{ fontWeight: 800, color: '#fff', fontSize: '1.1rem' }}>EventHub</span>
+          <span style={{ fontWeight: 800, color: '#fff', fontSize: '1.1rem' }}>GigGo</span>
         </Link>
         <blockquote style={{ fontSize: '1.5rem', fontWeight: 700, color: '#fff', lineHeight: 1.4, marginBottom: '1.5rem', fontStyle: 'italic' }}>
           &ldquo;The night people remember is the one that was booked right.&rdquo;
@@ -138,7 +138,7 @@ export default function AuthPage() {
           </form>
 
           <p style={{ textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-3)', marginTop: '1.5rem' }}>
-            By continuing you agree to EventHub&apos;s{' '}
+            By continuing you agree to GigGo&apos;s{' '}
             <span style={{ color: 'var(--accent)', cursor: 'pointer' }}>Terms</span> and{' '}
             <span style={{ color: 'var(--accent)', cursor: 'pointer' }}>Privacy Policy</span>.
           </p>

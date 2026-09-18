@@ -11,7 +11,7 @@ export default function Footer() {
             <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(168, 85, 247, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Music2 size={16} color="#c084fc" />
             </div>
-            <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#fff' }}>EventHub</span>
+            <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#fff' }}>GigGo</span>
           </Link>
           <p style={{ color: 'var(--text-3)', fontSize: '0.95rem', lineHeight: 1.6, maxWidth: '300px' }}>
             The premium marketplace for artists, bands and venues — with milestone-protected payments on every booking.
@@ -28,7 +28,7 @@ export default function Footer() {
         <div>
           <h4 style={{ color: '#fff', fontWeight: 600, marginBottom: '1.5rem', fontSize: '1rem' }}>For providers</h4>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Link href="/onboarding/role" style={{ color: 'var(--text-2)', textDecoration: 'none', fontSize: '0.95rem' }}>Join EventHub</Link>
+            <Link href="/onboarding/role" style={{ color: 'var(--text-2)', textDecoration: 'none', fontSize: '0.95rem' }}>Join GigGo</Link>
             <Link href="/studio" style={{ color: 'var(--text-2)', textDecoration: 'none', fontSize: '0.95rem' }}>Provider studio</Link>
             <Link href="/studio/packages" style={{ color: 'var(--text-2)', textDecoration: 'none', fontSize: '0.95rem' }}>Packages</Link>
           </div>
@@ -46,7 +46,7 @@ export default function Footer() {
       <div className="container">
         <div className="divider" style={{ marginBottom: '1.5rem', background: 'rgba(255,255,255,0.05)' }} />
         <p style={{ textAlign: 'center', color: 'var(--text-3)', fontSize: '0.8rem' }}>
-          © {new Date().getFullYear()} EventHub. All rights reserved.
+          © {new Date().getFullYear()} GigGo. All rights reserved.
         </p>
       </div>
 

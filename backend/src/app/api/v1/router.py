@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from src.modules.auth.routes import router as auth_router
-from src.modules.eventhub.routes import router as provider_router
+from src.modules.giggo.routes import router as provider_router
 from src.modules.bookings.routes import router as booking_router
 from src.modules.reviews.routes import router as review_router
 from src.modules.studio.routes import router as studio_router

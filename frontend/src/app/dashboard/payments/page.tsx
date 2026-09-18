@@ -57,7 +57,7 @@ export default function PaymentsPage() {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: order.amount,
         currency: order.currency,
-        name: "EventHub",
+        name: "GigGo",
         description: `Advance for ${booking.package?.name}`,
         order_id: order.razorpay_order_id,
         handler: async function (response: RazorpayResponse) {

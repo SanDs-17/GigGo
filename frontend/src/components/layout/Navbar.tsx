@@ -28,7 +28,7 @@ export default function Navbar() {
           <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(168, 85, 247, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Music2 size={16} color="#c084fc" />
           </div>
-          <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#fff' }}>EventHub</span>
+          <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#fff' }}>GigGo</span>
         </Link>
 
         {/* Desktop nav */}

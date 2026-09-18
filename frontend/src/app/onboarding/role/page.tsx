@@ -51,7 +51,7 @@ export default function OnboardingRolePage() {
         <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-3)', textDecoration: 'none', fontSize: '0.875rem', marginBottom: '2.5rem', transition: 'color 0.2s' }}
           onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
           onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-3)')}>
-          <ChevronLeft size={16} /> Back to EventHub
+          <ChevronLeft size={16} /> Back to GigGo
         </Link>
 
         <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
@@ -59,7 +59,7 @@ export default function OnboardingRolePage() {
             <Music2 size={24} color="#fff" />
           </div>
           <h1 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.5rem', letterSpacing: '-0.02em' }}>
-            How do you want to use EventHub?
+            How do you want to use GigGo?
           </h1>
           <p style={{ color: 'var(--text-3)', fontSize: '0.9rem' }}>You can switch roles later from your settings.</p>
         </div>

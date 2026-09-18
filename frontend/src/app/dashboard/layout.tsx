@@ -19,7 +19,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="container" style={{ padding: '2.5rem 1.5rem' }}>
       <div style={{ marginBottom: '2rem' }}>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '0.25rem' }}>My EventHub</h1>
+        <h1 style={{ fontSize: '1.75rem', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '0.25rem' }}>My GigGo</h1>
         <p style={{ color: 'var(--text-3)', fontSize: '0.875rem' }}>Track your bookings, payments and reviews.</p>
       </div>
 

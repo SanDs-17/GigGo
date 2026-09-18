@@ -10,6 +10,6 @@ interface UIState {
 export const useUIStore = create<UIState>((set) => ({
   isSidebarOpen: false,
   toggleSidebar: () => set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
-  theme: 'dark', // default dark for EventHub
+  theme: 'dark', // default dark for GigGo
   setTheme: (theme) => set({ theme }),
 }));

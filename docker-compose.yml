@@ -3,12 +3,12 @@ version: "3.9"
 services:
   db:
     image: postgres:16-alpine
-    container_name: eventhub_db
+    container_name: giggo_db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: eventhub
-      POSTGRES_PASSWORD: eventhub123
-      POSTGRES_DB: eventhub
+      POSTGRES_USER: giggo
+      POSTGRES_PASSWORD: giggo123
+      POSTGRES_DB: giggo
     ports:
       - "5432:5432"
     volumes:
@@ -16,10 +16,10 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: eventhub_pgadmin
+    container_name: giggo_pgadmin
     restart: unless-stopped
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@eventhub.com
+      PGADMIN_DEFAULT_EMAIL: admin@giggo.com
       PGADMIN_DEFAULT_PASSWORD: admin123
     ports:
       - "5050:80"
