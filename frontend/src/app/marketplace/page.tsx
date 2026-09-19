@@ -83,7 +83,7 @@ export default function MarketplacePage() {
       {/* Max price */}
       <div style={{ marginBottom: '1.5rem' }}>
         <label style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-3)', display: 'block', marginBottom: '0.5rem' }}>Max starting price</label>
-        <input type="range" min={10000} max={300000} step={5000} value={maxPrice}
+        <input type="range" min={10000} max={300000} step={100} value={maxPrice}
           onChange={e => setMaxPrice(Number(e.target.value))} style={{ width: '100%', marginBottom: '0.375rem' }} />
         <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--accent)' }}>{formatINR(maxPrice)}</span>
       </div>

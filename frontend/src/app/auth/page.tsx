@@ -15,7 +15,8 @@ import toast from 'react-hot-toast';
 const schema = z.object({
   name: z.string().optional(),
   email: z.string().email({ message: 'Invalid email address' }),
-  password: z.string().min(6, { message: 'Password must be at least 6 characters' })
+  password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
+  role: z.enum(['customer', 'provider']).optional()
 });
 
 type AuthFormData = z.infer<typeof schema>;
@@ -26,24 +27,33 @@ export default function AuthPage() {
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
   const [showPw, setShowPw] = useState(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<AuthFormData>({
-    resolver: zodResolver(schema)
+  const { register, handleSubmit, formState: { errors }, watch } = useForm<AuthFormData>({
+    resolver: zodResolver(schema),
+    defaultValues: { role: 'customer' }
   });
+
+  const selectedRole = watch('role');
 
   const mutation = useMutation({
     mutationFn: async (data: AuthFormData) => {
       if (mode === 'signup') {
-        return await authService.register({ email: data.email, name: data.name, password: data.password });
+        return await authService.register({ email: data.email, name: data.name, password: data.password, role: data.role });
       } else {
         return await authService.login({ email: data.email, password: data.password });
       }
     },
     onSuccess: (res) => {
+      if (mode === 'signup') {
+        toast.success('Account created successfully! Please sign in.');
+        setMode('signin');
+        return;
+      }
+      
       if (typeof window !== 'undefined') {
         localStorage.setItem('token', res.accessToken || res.access_token);
       }
       dispatch(setAuth(res.user));
-      toast.success(`Welcome${mode === 'signup' ? '' : ' back'}, ${res.user.name.split(' ')[0]}!`);
+      toast.success(`Welcome back, ${res.user.name.split(' ')[0]}!`);
       router.push(res.user.role === 'provider' ? '/studio' : '/dashboard');
     },
     onError: (err: any) => {
@@ -109,11 +119,26 @@ export default function AuthPage() {
 
           <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {mode === 'signup' && (
-              <div>
-                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-2)', display: 'block', marginBottom: '0.375rem' }}>Full name</label>
-                <input className="input" type="text" placeholder="Your name" {...register('name')} />
-                {errors.name && <p style={{ color: 'red', fontSize: '0.75rem', marginTop: '0.25rem' }}>{errors.name.message}</p>}
-              </div>
+              <>
+                <div>
+                  <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-2)', display: 'block', marginBottom: '0.375rem' }}>Full name</label>
+                  <input className="input" type="text" placeholder="Your name" {...register('name')} />
+                  {errors.name && <p style={{ color: 'red', fontSize: '0.75rem', marginTop: '0.25rem' }}>{errors.name.message}</p>}
+                </div>
+                <div>
+                  <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-2)', display: 'block', marginBottom: '0.375rem' }}>I want to</label>
+                  <div style={{ display: 'flex', gap: '1rem' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                      <input type="radio" value="customer" {...register('role')} />
+                      <span style={{ fontSize: '0.85rem' }}>Book artists (Customer)</span>
+                    </label>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                      <input type="radio" value="provider" {...register('role')} />
+                      <span style={{ fontSize: '0.85rem' }}>Offer services (Provider)</span>
+                    </label>
+                  </div>
+                </div>
+              </>
             )}
             <div>
               <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-2)', display: 'block', marginBottom: '0.375rem' }}>Email</label>

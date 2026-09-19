@@ -119,6 +119,7 @@ export const providersApi = {
 
 // ── Packages ──────────────────────────────────────────────────────────
 export const packagesApi = {
+  list: () => API.get<Package[]>('/packages').then((r) => r.data),
   create: (data: { name: string; duration: string; price: number; features: string[] }) =>
     API.post<Package>('/packages', data).then((r) => r.data),
   update: (id: number, data: Partial<Package>) =>

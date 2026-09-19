@@ -1,5 +1,7 @@
 'use client';
 import { Camera, MapPin, Music2, Globe, ExternalLink, PlayCircle } from 'lucide-react';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const categories = [
   { value: 'live_band', label: 'Live Band', icon: '🎸' },
@@ -9,6 +11,27 @@ const categories = [
 ];
 
 export default function StudioProfilePage() {
+  const [formData, setFormData] = useState({
+    displayName: 'Midnight Echo',
+    category: 'live_band',
+    city: 'Bengaluru',
+    tagline: 'Six-piece rock & funk collective built for peak-hour crowds.',
+    bio: 'Midnight Echo has headlined 400+ weddings, corporate nights and festival stages across India. Full production, in-house sound engineer and a setlist tailored to your crowd.',
+    website: '',
+    instagram: '',
+    youtube: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSave = () => {
+    // Simulate API call
+    toast.success('Profile saved successfully!');
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       {/* Cover + Avatar */}
@@ -30,11 +53,11 @@ export default function StudioProfilePage() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
             <div>
               <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-2)', display: 'block', marginBottom: '0.375rem' }}>Display name</label>
-              <input className="input" defaultValue="Midnight Echo" />
+              <input className="input" name="displayName" value={formData.displayName} onChange={handleChange} />
             </div>
             <div>
               <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-2)', display: 'block', marginBottom: '0.375rem' }}>Category</label>
-              <select className="select" defaultValue="live_band">
+              <select className="select" name="category" value={formData.category} onChange={handleChange}>
                 {categories.map(c => <option key={c.value} value={c.value}>{c.icon} {c.label}</option>)}
               </select>
             </div>
@@ -43,16 +66,16 @@ export default function StudioProfilePage() {
             <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-2)', display: 'block', marginBottom: '0.375rem' }}>City</label>
             <div style={{ position: 'relative' }}>
               <MapPin size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
-              <input className="input" defaultValue="Bengaluru" style={{ paddingLeft: '2.25rem' }} />
+              <input className="input" name="city" value={formData.city} onChange={handleChange} style={{ paddingLeft: '2.25rem' }} />
             </div>
           </div>
           <div>
             <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-2)', display: 'block', marginBottom: '0.375rem' }}>Tagline</label>
-            <input className="input" defaultValue="Six-piece rock & funk collective built for peak-hour crowds." />
+            <input className="input" name="tagline" value={formData.tagline} onChange={handleChange} />
           </div>
           <div>
             <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-2)', display: 'block', marginBottom: '0.375rem' }}>Bio</label>
-            <textarea className="input" rows={5} defaultValue="Midnight Echo has headlined 400+ weddings, corporate nights and festival stages across India. Full production, in-house sound engineer and a setlist tailored to your crowd." style={{ resize: 'vertical' }} />
+            <textarea className="input" name="bio" rows={5} value={formData.bio} onChange={handleChange} style={{ resize: 'vertical' }} />
           </div>
         </div>
       </div>
@@ -61,20 +84,22 @@ export default function StudioProfilePage() {
       <div style={{ padding: '1.5rem', borderRadius: '1rem', border: '1px solid var(--border)', background: 'var(--surface)' }}>
         <h3 style={{ fontWeight: 700, marginBottom: '1.25rem' }}>Social links</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
-          {[
-            { icon: Globe, label: 'Website', placeholder: 'https://yourwebsite.com' },
-            { icon: ExternalLink, label: 'Instagram', placeholder: '@handle' },
-            { icon: PlayCircle, label: 'YouTube', placeholder: 'Channel URL' },
-          ].map(s => (
-            <div key={s.label} style={{ position: 'relative' }}>
-              <s.icon size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
-              <input className="input" placeholder={s.placeholder} style={{ paddingLeft: '2.25rem' }} />
-            </div>
-          ))}
+          <div style={{ position: 'relative' }}>
+            <Globe size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
+            <input className="input" name="website" value={formData.website} onChange={handleChange} placeholder="https://yourwebsite.com" style={{ paddingLeft: '2.25rem' }} />
+          </div>
+          <div style={{ position: 'relative' }}>
+            <ExternalLink size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
+            <input className="input" name="instagram" value={formData.instagram} onChange={handleChange} placeholder="@handle" style={{ paddingLeft: '2.25rem' }} />
+          </div>
+          <div style={{ position: 'relative' }}>
+            <PlayCircle size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
+            <input className="input" name="youtube" value={formData.youtube} onChange={handleChange} placeholder="Channel URL" style={{ paddingLeft: '2.25rem' }} />
+          </div>
         </div>
       </div>
 
-      <button className="btn-primary" style={{ alignSelf: 'flex-start' }}>Save profile</button>
+      <button className="btn-primary" style={{ alignSelf: 'flex-start' }} onClick={handleSave}>Save profile</button>
     </div>
   );
 }

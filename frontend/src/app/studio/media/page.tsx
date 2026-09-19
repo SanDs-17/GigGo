@@ -1,6 +1,7 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Upload, Image as ImageIcon, Video, Trash2, Plus } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const mockMedia = [
   { id: 1, url: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400', type: 'image', caption: 'Live at Lollapalooza India' },
@@ -13,25 +14,66 @@ const mockMedia = [
 
 export default function StudioMediaPage() {
   const [media, setMedia] = useState(mockMedia);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const remove = (id: number) => setMedia(prev => prev.filter(m => m.id !== id));
 
+  const handleFiles = (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    
+    const newMedia = Array.from(files).map((file, i) => ({
+      id: Date.now() + i,
+      url: URL.createObjectURL(file),
+      type: file.type.startsWith('video/') ? 'video' : 'image',
+      caption: file.name
+    }));
+
+    setMedia(prev => [...newMedia, ...prev]);
+    toast.success(`Uploaded ${files.length} item(s) successfully!`);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      handleFiles(e.dataTransfer.files);
+    }
+  };
+
   return (
     <div>
+      <input 
+        type="file" 
+        multiple 
+        hidden 
+        ref={fileInputRef} 
+        accept="image/*,video/*" 
+        onChange={(e) => handleFiles(e.target.files)} 
+      />
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
         <div>
           <h2 style={{ fontWeight: 700, fontSize: '1.1rem' }}>Media Gallery</h2>
           <p style={{ color: 'var(--text-3)', fontSize: '0.8rem', marginTop: '0.25rem' }}>{media.length} items · Shown on your public profile</p>
         </div>
-        <button className="btn-primary" style={{ fontSize: '0.85rem' }}>
+        <button className="btn-primary" style={{ fontSize: '0.85rem' }} onClick={() => fileInputRef.current?.click()}>
           <Upload size={14} /> Upload media
         </button>
       </div>
 
       {/* Upload zone */}
-      <div style={{ border: '2px dashed var(--border-2)', borderRadius: '1rem', padding: '2rem', textAlign: 'center', marginBottom: '2rem', cursor: 'pointer', transition: 'border-color 0.2s, background 0.2s' }}
+      <div 
+        style={{ border: '2px dashed var(--border-2)', borderRadius: '1rem', padding: '2rem', textAlign: 'center', marginBottom: '2rem', cursor: 'pointer', transition: 'border-color 0.2s, background 0.2s' }}
         onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--primary)'; (e.currentTarget as HTMLElement).style.background = 'rgba(124,58,237,0.04)'; }}
-        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-2)'; (e.currentTarget as HTMLElement).style.background = 'transparent'; }}>
+        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-2)'; (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
+        onClick={() => fileInputRef.current?.click()}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      >
         <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--accent-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 0.875rem' }}>
           <Plus size={22} color="var(--accent)" />
         </div>

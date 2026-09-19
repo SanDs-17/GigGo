@@ -150,28 +150,34 @@ export default function ProviderPage() {
           {/* Packages */}
           <section>
             <h2 style={{ fontWeight: 700, fontSize: '1.2rem', marginBottom: '1.25rem' }}>Packages</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1rem' }}>
-              {provider.packages.map(pkg => (
-                <div key={pkg.id} onClick={() => setSelectedPkg(pkg)}
-                  style={{ padding: '1.5rem', borderRadius: '0.875rem', border: `2px solid ${selectedPkg?.id === pkg.id ? 'var(--primary)' : 'var(--border)'}`, background: selectedPkg?.id === pkg.id ? 'rgba(124,58,237,0.08)' : 'var(--surface)', cursor: 'pointer', transition: 'all 0.2s', boxShadow: selectedPkg?.id === pkg.id ? '0 0 24px var(--primary-glow)' : 'none' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.375rem' }}>
-                    <h3 style={{ fontWeight: 700 }}>{pkg.name}</h3>
-                    {selectedPkg?.id === pkg.id && <CheckCircle size={18} color="var(--primary)" />}
+            {provider.packages && provider.packages.length > 0 ? (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1rem' }}>
+                {provider.packages.map(pkg => (
+                  <div key={pkg.id} onClick={() => setSelectedPkg(pkg)}
+                    style={{ padding: '1.5rem', borderRadius: '0.875rem', border: `2px solid ${selectedPkg?.id === pkg.id ? 'var(--primary)' : 'var(--border)'}`, background: selectedPkg?.id === pkg.id ? 'rgba(124,58,237,0.08)' : 'var(--surface)', cursor: 'pointer', transition: 'all 0.2s', boxShadow: selectedPkg?.id === pkg.id ? '0 0 24px var(--primary-glow)' : 'none' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.375rem' }}>
+                      <h3 style={{ fontWeight: 700 }}>{pkg.name}</h3>
+                      {selectedPkg?.id === pkg.id && <CheckCircle size={18} color="var(--primary)" />}
+                    </div>
+                    <p style={{ color: 'var(--text-3)', fontSize: '0.8rem', marginBottom: '1rem' }}>{pkg.duration}</p>
+                    <p style={{ fontWeight: 800, fontSize: '1.3rem', color: 'var(--accent)', marginBottom: '1rem' }}>{formatINR(pkg.price)}</p>
+                    {pkg.features?.length > 0 && (
+                      <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                        {pkg.features.map((f, i) => (
+                          <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem', color: 'var(--text-2)' }}>
+                            <CheckCircle size={13} color="var(--success)" /> {f}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
-                  <p style={{ color: 'var(--text-3)', fontSize: '0.8rem', marginBottom: '1rem' }}>{pkg.duration}</p>
-                  <p style={{ fontWeight: 800, fontSize: '1.3rem', color: 'var(--accent)', marginBottom: '1rem' }}>{formatINR(pkg.price)}</p>
-                  {pkg.features?.length > 0 && (
-                    <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
-                      {pkg.features.map((f, i) => (
-                        <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem', color: 'var(--text-2)' }}>
-                          <CheckCircle size={13} color="var(--success)" /> {f}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <p style={{ color: 'var(--text-3)', fontSize: '0.9rem', fontStyle: 'italic', padding: '1rem 0' }}>
+                This provider hasn't created any packages yet.
+              </p>
+            )}
           </section>
         </div>
 
@@ -183,11 +189,17 @@ export default function ProviderPage() {
             {/* Package select */}
             <div style={{ marginBottom: '1rem' }}>
               <label style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-3)', display: 'block', marginBottom: '0.5rem' }}>Package</label>
-              <select className="select" value={selectedPkg?.id || ''} onChange={e => setSelectedPkg(provider.packages.find(p => p.id === Number(e.target.value)) || null)}>
-                {provider.packages.map(pkg => (
-                  <option key={pkg.id} value={pkg.id}>{pkg.name} — {formatINR(pkg.price)}</option>
-                ))}
-              </select>
+              {provider.packages && provider.packages.length > 0 ? (
+                <select className="select" value={selectedPkg?.id || ''} onChange={e => setSelectedPkg(provider.packages.find(p => p.id === Number(e.target.value)) || null)}>
+                  {provider.packages.map(pkg => (
+                    <option key={pkg.id} value={pkg.id}>{pkg.name} — {formatINR(pkg.price)}</option>
+                  ))}
+                </select>
+              ) : (
+                <div style={{ padding: '0.75rem 1rem', background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: '0.5rem', color: 'var(--text-3)', fontSize: '0.85rem' }}>
+                  No packages available
+                </div>
+              )}
             </div>
 
             {/* Event date */}
@@ -222,7 +234,7 @@ export default function ProviderPage() {
               </div>
             )}
 
-            <button onClick={handleBook} disabled={booking} className="btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '0.75rem' }}>
+            <button onClick={handleBook} disabled={booking || !provider.packages?.length} className="btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '0.75rem', opacity: (!provider.packages?.length) ? 0.5 : 1, cursor: (!provider.packages?.length) ? 'not-allowed' : 'pointer' }}>
               {booking ? 'Submitting...' : <>Request booking <ArrowRight size={16} /></>}
             </button>
 

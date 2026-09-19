@@ -1,21 +1,20 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { packagesApi, formatINR } from '@/lib/api';
 import { Plus, Trash2, Edit2, Check, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface PkgForm { name: string; duration: string; price: string; features: string; }
 
-const defaultPkgs = [
-  { id: 1, name: 'Basic Gig', duration: '90 minutes', price: 50000, features: ['4-piece line-up', 'Own instruments', 'Basic PA'], is_active: true },
-  { id: 2, name: 'Headline Night', duration: '3 hours + soundcheck', price: 125000, features: ['6-piece line-up', 'Full production', 'Sound engineer', 'Custom setlist'], is_active: true },
-];
-
 export default function StudioPackagesPage() {
-  const [packages, setPackages] = useState(defaultPkgs);
+  const [packages, setPackages] = useState<any[]>([]);
   const [adding, setAdding] = useState(false);
   const [form, setForm] = useState<PkgForm>({ name: '', duration: '', price: '', features: '' });
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    packagesApi.list().then(setPackages).catch(console.error);
+  }, []);
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -9,12 +9,17 @@ const navItems = [
   { href: '/studio/bookings', label: 'Bookings & Requests', icon: CalendarDays },
   { href: '/studio/packages', label: 'Packages & Pricing', icon: Package },
   { href: '/studio/media', label: 'Media Gallery', icon: Image },
-  { href: '/studio/facilities', label: 'Facilities', icon: Building2 },
+  { href: '/studio/facilities', label: 'Facilities', icon: Building2, forVenueOnly: true },
   { href: '/studio/settings', label: 'Settings', icon: Settings },
 ];
 
 export default function StudioLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const providerCategory = 'live_band'; // TODO: Fetch from actual provider state
+
+  const visibleNavItems = navItems.filter(item => 
+    !item.forVenueOnly || providerCategory === 'venue'
+  );
 
   return (
     <div className="container" style={{ padding: '2.5rem 1.5rem' }}>
@@ -38,7 +43,7 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
           </div>
 
           <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-            {navItems.map(item => {
+            {visibleNavItems.map(item => {
               const active = item.exact ? pathname === item.href : pathname?.startsWith(item.href);
               return (
                 <Link key={item.href} href={item.href} className={`sidebar-link ${active ? 'active' : ''}`}>
@@ -49,6 +54,40 @@ export default function StudioLayout({ children }: { children: React.ReactNode }
               );
             })}
           </nav>
+
+          {/* Logout Button */}
+          <div style={{ marginTop: '2rem' }}>
+            <button
+              onClick={() => {
+                // Dispatch logout action or handle logout
+                window.location.href = '/';
+              }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.75rem 1.25rem',
+                borderRadius: '0.5rem',
+                border: 'none',
+                background: 'transparent',
+                color: 'var(--text-3)',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                width: '100%',
+                transition: 'color 0.2s',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--danger)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-3)')}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+              Sign out
+            </button>
+          </div>
         </aside>
 
         {/* Content */}
