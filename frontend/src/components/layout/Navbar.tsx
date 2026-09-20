@@ -10,7 +10,10 @@ import { logout } from '@/store/slices/authSlice';
 export default function Navbar() {
   const { user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
-  const handleLogout = () => dispatch(logout());
+  const handleLogout = () => {
+    dispatch(logout());
+    window.location.href = '/';
+  };
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
